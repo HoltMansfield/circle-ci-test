@@ -1,12 +1,8 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:8.9.0
 
     working_directory: ~/repo
@@ -28,5 +24,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn test
+      # run tests
+      - run: CI=true npm test
+      # The build command will check for linter warnings and fail if any are found
+      - run: CI=true npm run build
